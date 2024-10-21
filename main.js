@@ -1,26 +1,39 @@
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
 
-var canvas = document.getElementById('myCanvas');
-var ctx = canvas.getContext('2d');
+// Liaison des boutons radio pour le mode (rectangle ou ligne)
+document.getElementById('butRect').onclick = function () {
+    if (pencil.currEditingMode !== editingMode.rect)
+        console.log("Nouvelle forme : Rectangle");
 
-canvas.width=800
-canvas.height=600
+    pencil.currEditingMode = editingMode.rect;
+};
 
-// Code temporaire pour tester le DnD
-new DnD(canvas);
-ctx.fillStyle = '#F0F0F0'; // set canvas' background color
-ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
-/////
+document.getElementById('butLine').onclick = function () {
+    if (pencil.currEditingMode !== editingMode.line)
+        console.log("Nouvelle forme : Ligne");
 
-// Code temporaire pour tester l'affiche de la vue
-//var rec = new Rectangle(10, 20, 50, 100, 5, '#00CCC0');
-//rec.paint(ctx);
-//var ligne = new Rectangle(10, 20, 50, 100, 5, '#00CCC0');
-//ligne.paint(ctx);
-// tester également Dessin.
-////
+    pencil.currEditingMode = editingMode.line;
+};
 
-// Code final à utiliser pour manipuler Pencil.
-//var drawing = new Drawing();
-//var pencil = new Pencil(ctx, drawing, canvas);
-//drawing.paint(ctx, canvas);
+// Liaison du spinner pour l'épaisseur de ligne (spinnerWidth)
+document.getElementById('spinnerWidth').onchange = function () {
+    const lineWidth = this.value;
+    pencil.currLineWidth = lineWidth;  // Mise à jour de l'épaisseur du crayon
+    console.log("Nouvelle épaisseur : " + lineWidth);
+};
 
+// Liaison du sélecteur de couleur
+document.getElementById('colour').onchange = function () {
+    pencil.currColour = this.value;
+    console.log("Nouvelle couleur : " + this.value);
+};
+
+canvas.width = 600;
+canvas.height = 600;
+
+// Appel initial de la mise à jour de la liste
+const drawing = new Drawing();
+const pencil = new Pencil(ctx, drawing, canvas);
+drawing.paint(ctx); // Dessiner le canvas initial
+console.log(pencil);
